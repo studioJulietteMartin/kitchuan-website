@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Added this to keep padding from breaking layouts */
+}
+
+/* Make sure the site takes up exactly 100% of the screen and hides scrollbars */
+body, html {
+    height: 100%;
+    cursor: none;
+    font-family: 'Arial Rounded MT Bold', 'Arial Rounded Bold', Arial, sans-serif;
+    overflow: hidden; /* Added to prevent scrolling when logo hits the edge */
+}
+
+a, button {
+    cursor: none;
+}
+
+/* The Background Layer (Layer -2) */
+#background-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: pink; /* Kept your pink default! */
+    background-size: cover; 
+    background-position: center;
+    z-index: -2; 
+    transition: background-image 0.2s ease; /* Optional: smooth fade */
+}
+
+/* The Logo Layer (Layer -1) */
+.background-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Perfectly centers the logo */
+    width: 50vw;
+    height: 50vh;
+    z-index: -1; /* Puts it behind the text, but in front of the background */
+    
+    background-image: url('logo.png');
+    background-size: contain; /* Changed to 'contain' so your logo is never cut off */
+    background-position: center;
+    background-repeat: no-repeat;
+    pointer-events: none; /* Crucial: lets clicks pass through the logo */
+}
+
+#custom-cursor {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: red;
+    border-radius: 50%; 
+    pointer-events: none; 
+    z-index: 9999; 
+    transform: translate(-50%, -50%); 
+}
+
+/* The Bio Content Container (Layer 1) */
+.content {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    
+}
+a {
+    text-decoration: none;
+    color: blue;
+    transition: text-shadow 0.3s ease-in-out;
+}
+a:hover {
+    text-shadow: 0px 0px 10px blue;
+}
+.bio {
+    color: #ffffff;
+    font-size: 1.5rem;
+    max-width: 1000px;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.bio::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0); /* Starts shrunk down to size 0 */
+    width: 50vw; 
+    height: 50vw;
+    background-color: rgba(255, 0, 0, 1); /* Red with a bit of transparency */
+    border-radius: 50%;
+    filter: blur(10vw); /* This creates the heavy, glowing blurred edge */
+    z-index: -1; /* Puts it directly behind the text */
+    transition: transform 0.5s ease-out; /* Controls the speed and smoothness of the growth */
+    pointer-events: none; /* Ensures the glow itself doesn't steal your background clicks */
+}
+
+/* The trigger: When the text is hovered, grow the dot to full size */
+.bio:hover::before {
+    transform: translate(-50%, -50%) scale(1); 
+}
+
+
+/* The Email Dot */
+.email-dot {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 24px;
+    background-color: red; 
+    border-radius: 50%;
+    z-index: 2;
+    pointer-events: auto; 
+    box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
+    transition: box-shadow 0.2s;
+}
+
+.email-dot:hover {
+    box-shadow: 0px 0px 20px 5px red;
+}
+
+@media (max-width: 768px) {
+    .bio {
+        font-size: 1.2rem; 
+    }
+    .background-logo {
+        width: 80vw; /* Make logo take up more room on small phone screens */
+    }
+}
+
+/* The floating image name label */
+#cursor-label {
+    position: absolute;
+    color: white;
+    font-size: 0.8rem;
+    background: rgba(0, 0, 0, 0.7); 
+    padding: 4px 8px;
+    border-radius: 4px;
+    pointer-events: none; 
+    z-index: 10;
+    display: none; 
+    transform: translate(15px, 15px); 
+}
